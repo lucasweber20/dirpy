@@ -5,9 +5,11 @@ class Requests:
     def __init__(self):
         pass
 
-    def requests(self, url):
+    def requests(self, urls):
         try:
-            req = requests.get(url).status_code
-            return req
+            req = requests.get(urls)
+            status_code = req.status_code
+            url = req.url
+            return status_code, url
         except:
             pass

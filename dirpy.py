@@ -28,6 +28,14 @@ def main():
         futures = [executor.submit(requests.requests, url) for url in urls_parsed]
         for future in concurrent.futures.as_completed(futures):
             status_code_result = future.result()
+            if status_code_result[0] >= 200 and status_code_result[0] < 300:
+                print(f"{status_code_result[1]}: \033[92m{status_code_result[0]}\033[00m")
+            elif status_code_result[0] >= 300 and status_code_result[0] < 400:
+                print(f"{status_code_result[1]}: \033[36m{status_code_result[0]}\033[00m")
+            elif status_code_result[0] >= 400 and status_code_result[0] < 500:
+                print(f"{status_code_result[1]}: \033[33m{status_code_result[0]}\033[00m")
+            elif status_code_result[0] >= 500 and status_code_result[0] < 600:
+                print(f"{status_code_result[1]}: \033[31m{status_code_result[0]}\033[00m")
 
 if __name__ == "__main__":
     main()
