@@ -1,4 +1,6 @@
 import argparse
+from script.Parser import Parser
+from script.Requests import Requests
 
 
 parser = argparse.ArgumentParser()
@@ -11,7 +13,12 @@ args = parser.add_argument("-t", "--thread", help="Specify threads number, examp
 args = parser.parse_args()
 
 def main():
-    pass
+    url = args.url
+    wordlist = args.wordlist
+
+    parser = Parser(url, wordlist)
+    urls_parsed = parser.parser()
+    
 
 if __name__ == "__main__":
     main()
