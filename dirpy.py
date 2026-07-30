@@ -8,9 +8,10 @@ parser = argparse.ArgumentParser()
 
 args = parser.add_argument("-u", "--url", help='Set url, example: -u https://example.com/', type=str)
 args = parser.add_argument("-w", "--wordlist", help="Specify file with values, example: -o directories.txt", type=str)
-args = parser.add_argument("-t", "--thread", help="Specify threads number, example: -t 3", default=1, type=int)
+args = parser.add_argument("-t", "--thread", help="Specify threads number, example: -t 5", default=1, type=int)
 args = parser.add_argument("-sc", "--status_code", help="Specify status code, example: -sc 200 or -sc 200,301", type=str)
 args = parser.add_argument("-to", "--timeout", help="Specify timeout in requests, example: --timeout 10", default=5, type=int)
+args = parser.add_argument("-d", "--delay", help="Specify delay in requests, example: --delay 5", type=int)
 args = parser.add_argument("-o", "--output", help="Specify output file, example: -o outputs.txt", type=str)
 
 args = parser.parse_args()
@@ -23,6 +24,7 @@ def main():
     threads = args.thread
     output = args.output
     timeout = args.timeout
+    delay = args.delay
 
     # Parser url
     parser = Parser(url, wordlist)
