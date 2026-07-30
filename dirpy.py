@@ -10,6 +10,7 @@ args = parser.add_argument("-u", "--url", help='Set url, example: -u https://exa
 args = parser.add_argument("-w", "--wordlist", help="Specify file with values, example: -o directories.txt", type=str)
 args = parser.add_argument("-t", "--thread", help="Specify threads number, example: -t 3", default=1, type=int)
 args = parser.add_argument("-sc", "--status_code", help="Specify status code, example: -sc 200 or -sc 200,301", type=str)
+args = parser.add_argument("-to", "--timeout", help="Specify timeout in requests, example: --timeout 10", default=5, type=int)
 args = parser.add_argument("-o", "--output", help="Specify output file, example: -o outputs.txt", type=str)
 
 args = parser.parse_args()
@@ -19,6 +20,7 @@ def main():
     wordlist = args.wordlist
     status_code = args.status_code
     threads = args.thread
+    timeout = args.timeout
 
     # Parser url
     parser = Parser(url, wordlist)
@@ -27,7 +29,7 @@ def main():
     # Requests
     requests = Requests()
     with concurrent.futures.ThreadPoolExecutor(max_workers=threads) as executor:
-        futures = [executor.submit(requests.requests, url, status_code) for url in urls_parsed]
+        futures = [executor.submit(requests.requests, url, status_code, timeout) for url in urls_parsed]
         for future in concurrent.futures.as_completed(futures):
             status_code_result = future.result()
             if status_code_result:
