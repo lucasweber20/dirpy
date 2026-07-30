@@ -12,10 +12,13 @@ class Requests:
             status_code = req.status_code
             url = urlsplit(urls).path
             if sc:
-                if str(status_code) == sc:
-                    return status_code, url
+                if "," in sc:
+                    for check_sc in sc.split(','):
+                        if str(status_code) == check_sc:
+                            return status_code, url
                 else:
-                    pass
+                    if str(status_code) == sc:
+                        return status_code, url
             else:
                 return status_code, url
         except:
