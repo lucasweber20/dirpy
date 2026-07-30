@@ -31,7 +31,10 @@ def main():
 
     # Parser url
     parser = Parser(url, wordlist)
-    urls_parsed = parser.parser()
+    if extension:
+        urls_parsed = parser.parser_extension(extension)    
+    else:
+        urls_parsed = parser.parser()
 
     # Requests
     requests = Requests()
