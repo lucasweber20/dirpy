@@ -1,4 +1,5 @@
 import requests
+from urllib.parse import urlsplit
 
 
 class Requests:
@@ -9,7 +10,7 @@ class Requests:
         try:
             req = requests.get(urls)
             status_code = req.status_code
-            url = req.url
+            url = urlsplit(urls).path
             return status_code, url
         except:
             pass
