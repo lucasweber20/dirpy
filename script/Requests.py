@@ -11,8 +11,8 @@ class Requests:
             req = requests.get(urls)
             status_code = req.status_code
             url = urlsplit(urls).path
-            if sc != 1:
-                if status_code == sc:
+            if sc:
+                if str(status_code) == sc:
                     return status_code, url
                 else:
                     pass
