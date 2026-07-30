@@ -16,10 +16,12 @@ args = parser.add_argument("-o", "--output", help="Specify output file, example:
 args = parser.parse_args()
 
 def main():
+    # Flags
     url = args.url
     wordlist = args.wordlist
     status_code = args.status_code
     threads = args.thread
+    output = args.output
     timeout = args.timeout
 
     # Parser url
@@ -41,6 +43,8 @@ def main():
                     print(f"{status_code_result[1]}: \033[33m{status_code_result[0]}\033[00m")
                 elif status_code_result[0] >= 500 and status_code_result[0] < 600:
                     print(f"{status_code_result[1]}: \033[31m{status_code_result[0]}\033[00m")
+                if output:
+                    write_file = open(output, "a").write(f"{status_code_result[1]} -> {status_code_result[0]}\n")
             else:
                 continue
 
