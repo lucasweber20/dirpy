@@ -1,5 +1,6 @@
 import concurrent.futures
 import argparse
+import time
 from script.Parser import Parser
 from script.Requests import Requests
 
@@ -36,6 +37,8 @@ def main():
         futures = [executor.submit(requests.requests, url, status_code, timeout) for url in urls_parsed]
         for future in concurrent.futures.as_completed(futures):
             status_code_result = future.result()
+            if delay:
+                time.sleep(delay)
             if status_code_result:
                 if status_code_result[0] >= 200 and status_code_result[0] < 300:
                     print(f"{status_code_result[1]}: \033[92m{status_code_result[0]}\033[00m")
