@@ -8,20 +8,15 @@ class Parser:
 
     def parser(self):
         parsed_urls = []
+        scheme = urlsplit(self.url).scheme
         hostname = urlsplit(self.url).netloc
         path = urlsplit(self.url).path
         read_wordlist = open(self.wordlist, encoding='utf-8').read().splitlines()
         for word in read_wordlist:
-            if "https" in self.url:
                 if path:
-                    parser_url = f"https://{hostname}{path}{word}"
+                    parser_url = f"{scheme}://{hostname}{path}{word}"
                 else:
-                    parser_url = f"https://{hostname}/{word}"
-            elif "http" in self.url:
-                if path:
-                    parser_url = f"https://{hostname}{path}{word}"
-                else:
-                    parser_url = f"https://{hostname}/{word}"
-            parsed_urls.append(parser_url)
+                    parser_url = f"{scheme}://{hostname}/{word}"
+                parsed_urls.append(parser_url)
         return parsed_urls
                 
