@@ -41,20 +41,20 @@ def main():
     with concurrent.futures.ThreadPoolExecutor(max_workers=threads) as executor:
         futures = [executor.submit(requests.requests, url, status_code, timeout) for url in urls_parsed]
         for future in concurrent.futures.as_completed(futures):
-            status_code_result = future.result()
+            result = future.result()
             if delay:
                 time.sleep(delay)
-            if status_code_result:
-                if status_code_result[0] >= 200 and status_code_result[0] < 300:
-                    print(f"{status_code_result[1]} -> \033[92m{status_code_result[0]}\033[00m Length: [{status_code_result[2]}]")
-                elif status_code_result[0] >= 300 and status_code_result[0] < 400:
-                    print(f"{status_code_result[1]} -> \033[36m{status_code_result[0]}\033[00m Length: [{status_code_result[2]}]")
-                elif status_code_result[0] >= 400 and status_code_result[0] < 500:
-                    print(f"{status_code_result[1]} -> \033[33m{status_code_result[0]}\033[00m Length: [{status_code_result[2]}]")
-                elif status_code_result[0] >= 500 and status_code_result[0] < 600:
-                    print(f"{status_code_result[1]} -> \033[31m{status_code_result[0]}\033[00m Length: [{status_code_result[2]}]")
+            if result:
+                if result[0] >= 200 and result[0] < 300:
+                    print(f"{result[1]} -> \033[92m{result[0]}\033[00m Length: [{result[2]}]")
+                elif result[0] >= 300 and result[0] < 400:
+                    print(f"{result[1]} -> \033[36m{result[0]}\033[00m Length: [{result[2]}]")
+                elif result[0] >= 400 and result[0] < 500:
+                    print(f"{result[1]} -> \033[33m{result[0]}\033[00m Length: [{result[2]}]")
+                elif result[0] >= 500 and result[0] < 600:
+                    print(f"{result[1]} -> \033[31m{result[0]}\033[00m Length: [{result[2]}]")
                 if output:
-                    write_file = open(output, "a").write(f"{status_code_result[1]} -> {status_code_result[0]}\n")
+                    write_file = open(output, "a").write(f"{result[1]} -> {result[0]}\n")
             else:
                 continue
 
