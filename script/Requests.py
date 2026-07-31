@@ -12,15 +12,16 @@ class Requests:
             req = requests.get(urls, headers=headers, allow_redirects=False, timeout=timeout)
             status_code = req.status_code
             url = urlsplit(urls).path
+            length = len(req.content)
             if sc:
                 if "," in sc:
                     for check_sc in sc.split(','):
                         if str(status_code) == check_sc:
-                            return status_code, url
+                            return status_code, url, length
                 else:
                     if str(status_code) == sc:
-                        return status_code, url
+                        return status_code, url, length
             else:
-                return status_code, url
+                return status_code, url, length
         except:
             pass
