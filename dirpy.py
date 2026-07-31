@@ -46,6 +46,10 @@ def main():
             result = future.result()
             if delay:
                 time.sleep(delay)
+            if exclude_length:
+                result_exclude_length = requests.exclude_length(result[2], exclude_length)
+                if result_exclude_length == False:
+                    continue
             if result:
                 if result[0] >= 200 and result[0] < 300:
                     print(f"{result[1]} -> \033[92m{result[0]}\033[00m Length: [{result[2]}]")
